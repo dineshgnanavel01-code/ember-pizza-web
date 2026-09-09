@@ -9,6 +9,14 @@ const pizzas: Pizza[] = [
   { id: 2, name: "Truffle Mushroom", description: "Roasted cremini, truffle cream, pecorino, thyme", price: 16, tag: "Vegetarian", category: "Vegetarian", image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85" },
   { id: 3, name: "The Diavola", description: "Spicy soppressata, fermented chili, mozzarella", price: 15, tag: "Spicy", category: "Popular", image: "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=85" },
   { id: 4, name: "Green Garden", description: "Zucchini, basil pesto, lemon ricotta, parmesan", price: 14, tag: "Fresh pick", category: "Vegetarian", image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85" },
+  { id: 5, name: "Margherita", description: "San Marzano tomato, fior di latte, basil, olive oil", price: 12, tag: "Classic", category: "Popular", image: "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=85" },
+  { id: 6, name: "Burrata Bianca", description: "Garlic cream, burrata, basil, lemon zest, chili oil", price: 16, tag: "Vegetarian", category: "Vegetarian", image: "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=85" },
+  { id: 7, name: "Brooklyn Meatball", description: "House meatballs, tomato sugo, mozzarella, oregano", price: 17, tag: "Hearty", category: "Meat lovers", image: "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=85" },
+  { id: 8, name: "Smoky BBQ Chicken", description: "Charred chicken, smoked mozzarella, pickled onion", price: 17, tag: "New", category: "Meat lovers", image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85" },
+  { id: 9, name: "Garlic Knots", description: "Wood-fired knots, garlic butter, parmesan, marinara", price: 7, tag: "Shareable", category: "Sides", image: "https://images.unsplash.com/photo-1573140401552-3fab0b24306f?auto=format&fit=crop&w=900&q=85" },
+  { id: 10, name: "Crispy Wings", description: "Eight wings, ember spice, ranch dip, celery", price: 11, tag: "Fan favorite", category: "Sides", image: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=900&q=85" },
+  { id: 11, name: "Blood Orange Soda", description: "Bright Italian soda, blood orange, crushed ice", price: 5, tag: "Cold", category: "Drinks", image: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=85" },
+  { id: 12, name: "Ginger Lemonade", description: "Fresh lemon, ginger syrup, sparkling water", price: 5, tag: "Fresh", category: "Drinks", image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=85" },
 ];
 
 const navItems = [
@@ -25,7 +33,7 @@ export default function App() {
 
   const count = Object.values(cart).reduce((a, b) => a + b, 0);
   const total = useMemo(() => Object.entries(cart).reduce((sum, [id, qty]) => sum + (pizzas.find(p => p.id === Number(id))?.price || 0) * qty, 0), [cart]);
-  const visible = category === "Popular" ? pizzas : pizzas.filter(p => p.category === category);
+  const visible = pizzas.filter(p => p.category === category);
 
   function add(id: number) { setCart(c => ({ ...c, [id]: (c[id] || 0) + 1 })); setNotice("Added to your bag"); setTimeout(() => setNotice(""), 1600); }
   function change(id: number, amount: number) { setCart(c => { const next = Math.max(0, (c[id] || 0) + amount); const copy = { ...c }; if (next === 0) delete copy[id]; else copy[id] = next; return copy; }); }
