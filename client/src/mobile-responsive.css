@@ -1,0 +1,143 @@
+/* Mobile-first responsive polish for Ember Pizza: 320–430px */
+@media (max-width: 430px) {
+  html, body, #root { width:100%; min-width:320px; max-width:100%; overflow-x:hidden; }
+  .app-shell, .main-content, .container { width:100%; min-width:0; max-width:100%; overflow-x:hidden; }
+  .container { width:calc(100% - 24px); margin-inline:auto; }
+
+  .topbar, .topbar:has(+.main-content) {
+    width:calc(100% - 16px); max-width:430px; min-width:0; padding:0 9px; height:58px; top:8px;
+  }
+  .brand-mark { flex:0 0 auto; min-width:0; gap:6px; font-size:11px; }
+  .brand-mark i { font-size:17px; }
+  .brand-flame { width:27px; height:27px; font-size:15px; }
+  .delivery-pill { min-width:0; max-width:39%; padding:7px 8px; gap:4px; font-size:9px; overflow:hidden; }
+  .delivery-pill svg { width:11px; height:11px; flex:0 0 auto; }
+  .delivery-pill span { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .delivery-pill strong { max-width:72px; display:inline-block; overflow:hidden; text-overflow:ellipsis; vertical-align:bottom; }
+  .header-actions { flex:0 0 auto; min-width:0; gap:1px; }
+  .header-icon, .mobile-menu-button { width:31px; height:31px; }
+  .avatar-button { width:31px; height:31px; }
+  .mobile-menu-button { display:grid; }
+  .header-icon i { width:13px; height:13px; font-size:8px; }
+
+  .main-content { padding-top:92px; }
+  .hero-grid { width:100%; min-width:0; grid-template-columns:1fr; gap:28px; align-items:start; }
+  .hero-copy { min-width:0; }
+  .eyebrow { font-size:9px; margin-bottom:14px; }
+  .hero-copy h1 { font-size:clamp(46px,14.2vw,61px); line-height:.92; overflow-wrap:normal; margin-bottom:20px; }
+  .hero-sub { max-width:100%; font-size:13px; line-height:1.55; margin-bottom:22px; }
+  .primary-button { max-width:100%; padding:13px 16px; font-size:11px; }
+  .rupee-ad { width:100%; max-width:320px; min-width:0; margin-top:18px; }
+  .rupee-copy { min-width:0; }
+  .rupee-copy b { font-size:18px; }
+  .rupee-copy small { white-space:nowrap; font-size:8px; }
+  .rupee-ad button { flex:0 0 auto; }
+  .hero-art { width:100%; max-width:100%; height:min(310px,72vw); min-height:245px; margin-inline:0; }
+  .hero-sticker { left:-5px; top:-12px; width:82px; height:82px; font-size:9px; }
+  .hero-sticker b { font-size:12px; }
+  .hero-caption { left:12px; right:12px; bottom:12px; }
+  .hero-caption span:last-child { max-width:58%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .mini-proof { margin-top:24px; }
+
+  .quick-row { width:100%; gap:6px; padding:18px 0; margin-top:32px; }
+  .quick-row > div { min-width:0; flex:1 1 0; gap:6px; }
+  .quick-icon { width:29px; height:29px; flex:0 0 auto; }
+  .quick-row b, .quick-row small { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .quick-row b { font-size:9px; }
+  .quick-row small { font-size:7px; }
+
+  .menu-section { padding:60px 0 78px; }
+  .section-heading { min-width:0; gap:12px; }
+  .section-heading > div { min-width:0; }
+  .section-heading h2 { font-size:clamp(35px,10.5vw,43px); }
+  .text-button { flex:0 0 auto; white-space:nowrap; font-size:9px; }
+  .category-tabs { width:100%; max-width:100%; overflow-x:auto; overflow-y:hidden; scrollbar-width:none; gap:18px; }
+  .category-tabs::-webkit-scrollbar { display:none; }
+  .category-tabs button { flex:0 0 auto; font-size:9px; }
+  .pizza-grid { width:100%; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .pizza-card { min-width:0; overflow:hidden; }
+  .pizza-image-wrap { height:auto; aspect-ratio:1.18 / 1; min-height:0; }
+  .pizza-card-body { min-width:0; padding:14px 11px 12px; }
+  .pizza-card h3 { font-size:15px; overflow-wrap:anywhere; }
+  .pizza-card p { font-size:9px; line-height:1.4; min-height:38px; margin-bottom:12px; overflow-wrap:anywhere; }
+  .pizza-bottom { min-width:0; gap:5px; }
+  .price { min-width:0; font-size:15px; }
+  .price small { font-size:8px; }
+  .add-button { min-width:0; white-space:nowrap; font-size:9px; gap:3px; }
+  .add-button svg { width:15px; height:15px; }
+  .pizza-tag { max-width:calc(100% - 48px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  .simple-page { width:100%; min-width:0; padding:52px 0 70px; }
+  .simple-page h1 { font-size:clamp(48px,14vw,58px); }
+  .deal-panel, .cart-panel, .profile-card, .profile-details { width:100%; max-width:none; min-width:0; padding:24px 16px; }
+  .deal-panel h2 { font-size:clamp(38px,12vw,48px); }
+  .cart-line { min-width:0; gap:9px; }
+  .cart-line img { width:54px; height:54px; flex:0 0 auto; }
+  .cart-line > div:nth-child(2) { min-width:0; flex:1 1 auto; }
+  .cart-line h3, .cart-line p { overflow-wrap:anywhere; }
+  .qty { flex:0 0 auto; gap:7px; }
+  .checkout-layout, .checkout-summary { width:100%; min-width:0; }
+  .address-card { min-width:0; }
+  .address-card div { min-width:0; flex:1 1 auto; }
+  .address-card small { overflow-wrap:anywhere; }
+  .address-card button { flex:0 0 auto; }
+
+  .tracking-page { width:100%; min-width:0; }
+  .tracking-header { gap:10px; }
+  .tracking-header > div:first-child { min-width:0; }
+  .tracking-header h1 { font-size:clamp(42px,13vw,50px); }
+  .eta-badge { flex:0 0 auto; }
+  .tracking-card, .map-art { width:100%; min-width:0; }
+  .tracking-status { min-width:0; }
+  .status-top { gap:8px; }
+  .status-top > span { white-space:nowrap; }
+  .tracking-steps { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .tracking-step { min-width:0; }
+  .tracking-step b, .tracking-step small { overflow-wrap:anywhere; }
+
+  .profile-detail-head { gap:10px; }
+  .profile-detail-head > div { min-width:0; }
+  .profile-detail-head h2 { font-size:23px; }
+  .detail-row { min-width:0; }
+  .detail-row div { min-width:0; }
+  .detail-row b { overflow-wrap:anywhere; }
+
+  .bottom-nav { width:calc(100% - 16px); max-width:430px; min-width:0; height:64px; }
+  .bottom-nav button { padding-inline:8px; min-width:0; }
+  .toast { max-width:calc(100% - 24px); white-space:normal; text-align:center; }
+}
+
+@media (max-width:360px) {
+  .container { width:calc(100% - 16px); }
+  .topbar, .topbar:has(+.main-content) { width:calc(100% - 12px); padding-inline:7px; }
+  .brand-mark { gap:4px; font-size:10px; }
+  .brand-mark i { font-size:15px; }
+  .brand-flame { width:24px; height:24px; font-size:14px; }
+  .delivery-pill { max-width:34%; font-size:8px; padding-inline:2px; }
+  .delivery-pill strong { max-width:58px; }
+  .avatar-button { width:29px; height:29px; }
+  .header-icon, .mobile-menu-button { width:28px; height:28px; }
+  .hero-grid { gap:26px; }
+  .hero-copy h1 { font-size:46px; }
+  .hero-art { height:250px; min-height:250px; }
+  .hero-sticker { width:72px; height:72px; font-size:8px; }
+  .hero-sticker b { font-size:12px; }
+  .quick-row { gap:3px; }
+  .quick-icon { width:26px; height:26px; }
+  .quick-row b { font-size:8px; }
+  .quick-row small { font-size:7px; }
+  .pizza-grid { gap:7px; }
+  .pizza-card h3 { font-size:13px; }
+  .pizza-card p { font-size:8px; line-height:1.35; }
+  .price { font-size:14px; }
+  .price small { font-size:8px; }
+  .add-button { font-size:8px; gap:2px; }
+  .add-button svg { width:14px; height:14px; }
+  .section-heading h2 { font-size:34px; }
+  .text-button { font-size:7px; }
+  .category-tabs button { font-size:9px; }
+  .rupee-ad { max-width:280px; }
+  .rupee-copy b { font-size:17px; }
+  .rupee-copy small { font-size:8px; }
+  .rupee-ad button { font-size:9px; }
+}
