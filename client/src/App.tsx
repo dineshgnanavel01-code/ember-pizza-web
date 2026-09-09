@@ -1,42 +1,70 @@
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
-import ErrorBoundary from "./components/ErrorBoundary";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+import { useMemo, useState } from "react";
+import { Heart, Home as HomeIcon, ShoppingBag, Tag, UserRound, Plus, Minus, ArrowRight, MapPin, Clock3, Search, Check } from "lucide-react";
+import "./index.css";
 
+type Pizza = { id: number; name: string; description: string; price: number; image: string; tag?: string; category: string };
 
-function Router() {
-  return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
-  );
+const pizzas: Pizza[] = [
+  { id: 1, name: "Hot Honey", description: "Cup & char pepperoni, whipped ricotta, hot honey", price: 14, tag: "Best seller", category: "Popular", image: "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=85" },
+  { id: 2, name: "Truffle Mushroom", description: "Roasted cremini, truffle cream, pecorino, thyme", price: 16, tag: "Vegetarian", category: "Vegetarian", image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85" },
+  { id: 3, name: "The Diavola", description: "Spicy soppressata, fermented chili, mozzarella", price: 15, tag: "Spicy", category: "Popular", image: "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=85" },
+  { id: 4, name: "Green Garden", description: "Zucchini, basil pesto, lemon ricotta, parmesan", price: 14, tag: "Fresh pick", category: "Vegetarian", image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85" },
+];
+
+const navItems = [
+  { label: "Home", icon: HomeIcon }, { label: "Deals", icon: Tag }, { label: "Cart", icon: ShoppingBag }, { label: "Profile", icon: UserRound },
+];
+
+export default function App() {
+  const [active, setActive] = useState("Home");
+  const [category, setCategory] = useState("Popular");
+  const [cart, setCart] = useState<Record<number, number>>({ 1: 1 });
+  const [liked, setLiked] = useState(false);
+  const [notice, setNotice] = useState("");
+
+  const count = Object.values(cart).reduce((a, b) => a + b, 0);
+  const total = useMemo(() => Object.entries(cart).reduce((sum, [id, qty]) => sum + (pizzas.find(p => p.id === Number(id))?.price || 0) * qty, 0), [cart]);
+  const visible = category === "Popular" ? pizzas : pizzas.filter(p => p.category === category);
+
+  function add(id: number) { setCart(c => ({ ...c, [id]: (c[id] || 0) + 1 })); setNotice("Added to your bag"); setTimeout(() => setNotice(""), 1600); }
+  function change(id: number, amount: number) { setCart(c => { const next = Math.max(0, (c[id] || 0) + amount); const copy = { ...c }; if (next === 0) delete copy[id]; else copy[id] = next; return copy; }); }
+
+  return <div className="app-shell">
+    <header className="topbar container">
+      <div className="brand-mark"><span className="brand-flame">✦</span><span>ember<br /><i>pizza</i></span></div>
+      <div className="delivery-pill"><MapPin size={14} /><span>Delivering to <strong>Brooklyn Heights</strong></span><span className="chevron">⌄</span></div>
+      <button className="avatar-button" onClick={() => setActive("Profile")} aria-label="Open profile">DK</button>
+    </header>
+
+    <main className="container main-content">
+      {active === "Home" && <>
+        <section className="hero-grid">
+          <div className="hero-copy">
+            <p className="eyebrow"><span className="eyebrow-dot" /> Wood-fired. Wildly good.</p>
+            <h1>Good pizza<br /><em>is a mood.</em></h1>
+            <p className="hero-sub">Small-batch dough, big-burn flavor.<br />Made for your kind of night.</p>
+            <button className="primary-button" onClick={() => document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })}>Build your order <ArrowRight size={17} /></button>
+            <div className="mini-proof"><div className="proof-avatars"><span>J</span><span>M</span><span>R</span></div><p><strong>4.9</strong> from 2,000+ happy slices</p></div>
+          </div>
+          <div className="hero-art"><div className="hero-sticker">New York<br /><b>in every<br />slice</b></div><img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1100&q=90" alt="Fresh wood-fired pizza" /><div className="hero-caption"><span>01 / 04</span><span>Our signature pies <ArrowRight size={15} /></span></div></div>
+        </section>
+
+        <section className="quick-row"><div><span className="quick-icon"><Clock3 size={18} /></span><span><b>25–35 min</b><small>average delivery</small></span></div><div><span className="quick-icon"><span className="tiny-leaf">✦</span></span><span><b>Always fresh</b><small>never frozen</small></span></div><div><span className="quick-icon"><span className="tiny-leaf">♨</span></span><span><b>900° oven</b><small>serious heat</small></span></div></section>
+
+        <section className="menu-section" id="menu"><div className="section-heading"><div><p className="eyebrow">The good stuff</p><h2>Pick your <em>pie.</em></h2></div><button className="text-button">View full menu <ArrowRight size={15} /></button></div>
+          <div className="category-tabs">{["Popular", "Vegetarian", "Meat lovers", "Sides", "Drinks"].map(c => <button key={c} className={category === c ? "active" : ""} onClick={() => setCategory(c)}>{c}</button>)}</div>
+          <div className="pizza-grid">{visible.map(pizza => <article className="pizza-card" key={pizza.id}><div className="pizza-image-wrap"><img src={pizza.image} alt={pizza.name} /><span className="pizza-tag">{pizza.tag}</span><button className={liked ? "heart liked" : "heart"} onClick={() => setLiked(!liked)} aria-label="Favorite pizza"><Heart size={17} fill={liked ? "currentColor" : "none"} /></button></div><div className="pizza-card-body"><div><h3>{pizza.name}</h3><p>{pizza.description}</p></div><div className="pizza-bottom"><span className="price">${pizza.price}<small> / 12"</small></span><button className="add-button" onClick={() => add(pizza.id)}><Plus size={17} /> Add</button></div></div></article>)}</div>
+        </section>
+      </>}
+
+      {active === "Deals" && <section className="simple-page"><p className="eyebrow">More slice, less spend</p><h1>Deals worth<br /><em>sharing.</em></h1><div className="deal-panel"><span className="deal-kicker">Tonight only</span><h2>Two pies.<br />One easy price.</h2><p>Pick any two 12” pizzas and get a side of garlic knots on us.</p><button className="primary-button" onClick={() => { setActive("Home"); setNotice("Deal added — pick your pies"); }}>Start a deal <ArrowRight size={17} /></button></div></section>}
+      {active === "Cart" && <section className="simple-page cart-page"><p className="eyebrow">Your order</p><h1>Good choices<br /><em>in the bag.</em></h1><div className="cart-panel">{count ? <>{Object.entries(cart).map(([id, qty]) => { const p = pizzas.find(x => x.id === Number(id))!; return <div className="cart-line" key={id}><img src={p.image} alt="" /><div><h3>{p.name}</h3><p>${p.price} each</p></div><div className="qty"><button onClick={() => change(p.id, -1)}><Minus size={14} /></button><b>{qty}</b><button onClick={() => change(p.id, 1)}><Plus size={14} /></button></div></div>})}<div className="cart-total"><span>Total</span><strong>${total}.00</strong></div><button className="primary-button full" onClick={() => setNotice("Checkout is ready for your order")}>Checkout <ArrowRight size={17} /></button></> : <div className="empty-cart"><ShoppingBag size={32} /><h3>Your bag is waiting.</h3><p>Add a pie to get started.</p><button className="primary-button" onClick={() => setActive("Home")}>Browse pizzas</button></div>}</div></section>}
+      {active === "Profile" && <section className="simple-page profile-page"><p className="eyebrow">Your Ember account</p><h1>Hey, <em>Dev.</em></h1><div className="profile-card"><div className="big-avatar">DK</div><h2>Dev Kumar</h2><p>Brooklyn Heights · Member since 2024</p><div className="profile-stats"><span><b>12</b><small>orders</small></span><span><b>4</b><small>favorites</small></span><span><b>$18</b><small>saved</small></span></div></div></section>}
+    </main>
+
+    <nav className="bottom-nav">{navItems.map(({ label, icon: Icon }) => <button key={label} className={active === label ? "selected" : ""} onClick={() => setActive(label)}><span className="nav-icon"><Icon size={20} strokeWidth={active === label ? 2.5 : 1.8} />{label === "Cart" && count > 0 && <i>{count}</i>}</span><span>{label}</span></button>)}</nav>
+    {notice && <div className="toast"><Check size={16} /> {notice}</div>}
+  </div>;
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
-function App() {
-  return (
-    <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
-    </ErrorBoundary>
-  );
-}
-
-export default App;
+export { App };
