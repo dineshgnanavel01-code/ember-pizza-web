@@ -9,7 +9,8 @@ button { font:inherit; color:inherit; border:0; cursor:pointer; }
 button:active { transform:scale(.97); }
 .container { width:min(1180px, calc(100% - 48px)); margin-inline:auto; }
 .app-shell { min-height:100vh; padding-bottom:100px; overflow:hidden; background:radial-gradient(circle at 90% 0%, #fffdf6 0, transparent 25%), var(--cream); }
-.topbar { height:86px; display:flex; align-items:center; justify-content:space-between; }
+.topbar { height:86px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--cream) 92%, transparent); backdrop-filter:blur(14px); border-bottom:1px solid transparent; transition:height .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease); }
+.topbar:has(+ .main-content) { padding-left:max(0px, calc((100vw - min(1180px, calc(100% - 48px))) / 2)); padding-right:max(0px, calc((100vw - min(1180px, calc(100% - 48px))) / 2)); width:100%; }
 .brand-mark { display:flex; align-items:center; gap:9px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; line-height:.78; font-size:15px; }
 .brand-mark i { font-family:'Playfair Display'; text-transform:none; letter-spacing:-.04em; font-size:20px; }
 .brand-flame { display:grid; place-items:center; width:31px; height:31px; border:1.5px solid var(--tomato); color:var(--tomato); border-radius:50%; font-size:17px; }
