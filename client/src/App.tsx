@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Heart, Home as HomeIcon, ShoppingBag, Tag, UserRound, Plus, Minus, ArrowRight, MapPin, Clock3, Check, CreditCard, Wallet, Navigation, ChefHat, Bike, CircleCheck } from "lucide-react";
+import { Heart, Home as HomeIcon, ShoppingBag, Tag, UserRound, Plus, Minus, ArrowRight, MapPin, Clock3, Check, CreditCard, Wallet, ChefHat, Bike, CircleCheck, Search, Menu, X } from "lucide-react";
 import "./index.css";
 
 type Pizza = { id: number; name: string; description: string; price: number; image: string; tag?: string; category: string };
@@ -30,6 +30,7 @@ export default function App() {
   const [liked, setLiked] = useState(false);
   const [notice, setNotice] = useState("");
   const [payment, setPayment] = useState("card");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const count = Object.values(cart).reduce((a, b) => a + b, 0);
   const total = useMemo(() => Object.entries(cart).reduce((sum, [id, qty]) => sum + (pizzas.find(p => p.id === Number(id))?.price || 0) * qty, 0), [cart]);
@@ -42,7 +43,8 @@ export default function App() {
     <header className="topbar container">
       <div className="brand-mark"><span className="brand-flame">✦</span><span>ember<br /><i>pizza</i></span></div>
       <div className="delivery-pill"><MapPin size={14} /><span>Delivering to <strong>Brooklyn Heights</strong></span><span className="chevron">⌄</span></div>
-      <button className="avatar-button" onClick={() => setActive("Profile")} aria-label="Open profile">DK</button>
+      <div className="header-actions"><button className="header-icon search-action" onClick={() => setNotice("Search is ready — browse by category below")} aria-label="Search menu"><Search size={18} /></button><button className="header-icon cart-action" onClick={() => setActive("Cart")} aria-label="Open cart"><ShoppingBag size={18} />{count > 0 && <i>{count}</i>}</button><button className="avatar-button" onClick={() => setActive("Profile")} aria-label="Open profile">DK</button><button className="mobile-menu-button" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle mobile menu">{mobileMenuOpen ? <X size={19} /> : <Menu size={19} />}</button></div>
+      {mobileMenuOpen && <div className="mobile-menu"><button onClick={() => { setActive("Home"); setMobileMenuOpen(false); }}>Home</button><button onClick={() => { setActive("Deals"); setMobileMenuOpen(false); }}>Deals</button><button onClick={() => { setActive("Cart"); setMobileMenuOpen(false); }}>Cart <span>{count}</span></button><button onClick={() => { setActive("Profile"); setMobileMenuOpen(false); }}>Profile</button></div>}
     </header>
 
     <main className="container main-content">
